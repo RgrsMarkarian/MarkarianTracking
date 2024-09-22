@@ -19,14 +19,17 @@ class TrackingController extends Controller
         $validatedData = $request->validate([
 
             'device' => 'required|string|max:255',
-            'latitud' => 'required|string|max:255',
-            'longitud' => 'required|string|max:255',
-            'up' =>  'required|integer',
-            'down' => 'required|integer',
-            'signal' => 'required|string|max:255',
-            'power' => 'required|integer'
+            'latitud' => 'required',
+            'longitud' => 'required',
+            'up' =>  'integer',
+            'down' => 'integer',
+            'signal' => 'string|max:255',
+            'power' => 'integer'
         ]);
-
+        $validatedData['up'] = 0;
+        $validatedData['down'] = 0;
+        $validatedData['signal'] = "0";
+        $validatedData['power'] = 0;
         // Crear registro
         Tracking::create([
             'device' => $validatedData['device'],
