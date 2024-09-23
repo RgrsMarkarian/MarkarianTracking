@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Tracking;
+use Illuminate\Support\Facades\Log;
+
 
 class TrackingController extends Controller
 {
@@ -40,11 +42,19 @@ class TrackingController extends Controller
         $minutes = substr($lng, $brk);
         $degrees = substr($lng, 0,$brk);
 
-        $newLng = $degrees + $minutes/60;
+      //  $this->info('Este es un mensaje de información.');
+      //  dump( $minutes);
+      //  dump( $degrees);
+
+        $newLng = $degrees + (float)$minutes/60;
+
+       
 
         if(stristr($lng,"W")){
             $newLng = -1 * $newLng;
         }
+
+        // dump( $newLng);
 
         //Convertir Latitud
         $lat =  $validatedData['latitud'];
@@ -54,20 +64,21 @@ class TrackingController extends Controller
         $minutes2 = substr($lat, $brk2);
         $degrees2 = substr($lat, 0,$brk2);
 
-        $newLat = $degrees2 + $minutes2/60;
+        $newLat = $degrees2 + (float)$minutes2/60;
 
-        if(stristr($lng,"W")){
+        if(stristr($lng,"S")){
             $newLat = -1 * $newLat;
         }
 
 
-
+      //  dump( $newLng);
+      //  dump( $newLat);
 
         // Crear registro
         Tracking::create([
             'device' => $validatedData['device'],
             'latitud' => $newLat,
-            'longitud' => $newLon,
+            'longitud' => $newLng,
             'up' => $validatedData['up'],
             'down' => $validatedData['down'],
             'signal'=> $validatedData['signal'],
