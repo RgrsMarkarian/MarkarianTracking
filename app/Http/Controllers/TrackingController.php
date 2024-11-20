@@ -21,8 +21,8 @@ class TrackingController extends Controller
         $validatedData = $request->validate([
 
             'device' => 'required|string|max:255',
-            'latitud' => 'required',
-            'longitud' => 'required',
+            'latitud' => 'string',
+            'longitud' => 'string',
             'up' =>  'integer',
             'down' => 'integer',
             'signal' => 'string|max:255',
@@ -33,6 +33,7 @@ class TrackingController extends Controller
         $validatedData['signal'] = "0";
         $validatedData['power'] = 0;
 
+        /*
 
         //Convertir Longitud
         $lng =  $validatedData['longitud'];
@@ -69,16 +70,27 @@ class TrackingController extends Controller
         if(stristr($lng,"S")){
             $newLat = -1 * $newLat;
         }
-
+*/
 
       //  dump( $newLng);
       //  dump( $newLat);
 
         // Crear registro
+        /*
         Tracking::create([
             'device' => $validatedData['device'],
             'latitud' => $newLat,
             'longitud' => $newLng,
+            'up' => $validatedData['up'],
+            'down' => $validatedData['down'],
+            'signal'=> $validatedData['signal'],
+            'power' => $validatedData['power']
+        ]);
+        */
+        Tracking::create([
+            'device' => $validatedData['device'],
+            'latitud' =>  $validatedData['latitud'],
+            'longitud' => $validatedData['longitud'],
             'up' => $validatedData['up'],
             'down' => $validatedData['down'],
             'signal'=> $validatedData['signal'],
