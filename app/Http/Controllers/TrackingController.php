@@ -18,7 +18,15 @@ class TrackingController extends Controller
     public function store(Request $request)
     {
         //Validar datos 
+
         $validatedData = $request->validate([
+
+            'device' => 'required|string|max:255',
+            'msg' => 'string'
+     
+        ]);
+     
+        /*   $validatedData = $request->validate([
 
             'device' => 'required|string|max:255',
             'latitud' => 'string',
@@ -28,12 +36,14 @@ class TrackingController extends Controller
             'signal' => 'string|max:255',
             'power' => 'integer'
         ]);
+*/
+        
+        /*
         $validatedData['up'] = 0;
         $validatedData['down'] = 0;
         $validatedData['signal'] = "0";
         $validatedData['power'] = 0;
 
-        /*
 
         //Convertir Longitud
         $lng =  $validatedData['longitud'];
@@ -86,7 +96,7 @@ class TrackingController extends Controller
             'signal'=> $validatedData['signal'],
             'power' => $validatedData['power']
         ]);
-        */
+        
         Tracking::create([
             'device' => $validatedData['device'],
             'latitud' =>  $validatedData['latitud'],
@@ -96,7 +106,13 @@ class TrackingController extends Controller
             'signal'=> $validatedData['signal'],
             'power' => $validatedData['power']
         ]);
-
+*/
+  Tracking::create([
+            'device' => $validatedData['device'],
+            'msg' =>  $validatedData['msg']
+      
+        ]);
+        
         return response()->json(['message' => 'Guardado con exito'],200);
 
     }
